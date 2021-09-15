@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">AppFadergs</string>
+
+    <string-array name="estados">
+        <item>Choose your state...</item>
+        <item>PR</item>
+        <item>RS</item>
+        <item>SC</item>
+    </string-array>
+
+    <string name="txtNome">Name: </string>
+    <string name="txtFone">Phone: </string>
+    <string name="txtHintNome">Insert your name: </string>
+    <string name="txtHintFone">Insert your phone: </string>
+    <string name="txtEstado">State: </string>
+
+    <string name="txtTurno">Study in which shift?</string>
+    <string name="txtManha">Morning</string>
+    <string name="txtNoite">Night</string>
+    <string name="txtSalvar">Save</string>
+
+
+</resources>
