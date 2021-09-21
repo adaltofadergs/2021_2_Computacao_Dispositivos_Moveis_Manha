@@ -1,7 +1,10 @@
 package br.pro.adalto.applista;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,12 +47,44 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent( MainActivity.this, FormularioActivity.class);
                 intent.putExtra("acao", "editar");
+                int idProduto = listaDeProdutos.get(position).getId();
+                intent.putExtra("idProduto", idProduto);
                 startActivity( intent );
+            }
+        });
+
+        lvProdutos.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+
+                excluir( position );
+
+                return true;
             }
         });
 
         carregarLista();
 
+    }
+
+    private void excluir(int posicao){
+        Produto prodSelecionado = listaDeProdutos.get( posicao );
+        AlertDialog.Builder alerta = new AlertDialog.Builder(this);
+        alerta.setTitle("Excluir");
+        alerta.setIcon( android.R.drawable.ic_delete);
+        alerta.setMessage("Confirma a exclusão do produto " + prodSelecionado.getNome() + "? ");
+
+        alerta.setNeutralButton("Cancelar", null);
+  //    alerta.setNegativeButton("Não", null);
+
+        alerta.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ProdutoDAO.excluir(MainActivity.this, prodSelecionado.getId() );
+                carregarLista();
+            }
+        });
+        alerta.show();
     }
 
     @Override
@@ -59,14 +94,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void carregarLista(){
-        // bando de dados Fake
-//        Produto p1 = new Produto("Coca-cola 2L", "Bebidas");
-//        Produto p2 = new Produto("Pepsi 1.5L", "Bebidas");
-//        Produto p3= new Produto("Trakinas", "Alimentos");
-//        listaDeProdutos = new ArrayList<>();
-//        listaDeProdutos.add(p1);
-//        listaDeProdutos.add(p2);
-//        listaDeProdutos.add(p3);
 
         listaDeProdutos = ProdutoDAO.getProdutos(this);
 

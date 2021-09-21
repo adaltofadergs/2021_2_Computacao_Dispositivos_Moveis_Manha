@@ -14,6 +14,8 @@ public class FormularioActivity extends AppCompatActivity {
     private EditText etNome;
     private Spinner spCategorias;
     private Button btnSalvar;
+    private String acao;
+    private Produto produto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +25,6 @@ public class FormularioActivity extends AppCompatActivity {
         etNome = findViewById(R.id.etNome);
         spCategorias = findViewById(R.id.spCategorias);
         btnSalvar = findViewById(R.id.btnSalvar);
-
         btnSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -31,7 +32,28 @@ public class FormularioActivity extends AppCompatActivity {
             }
         });
 
+        acao = getIntent().getStringExtra("acao");
+        if( acao.equals("editar")){
+            carregarFormulario();
+        }
     }
+
+    private void carregarFormulario(){
+        int idProduto = getIntent().getIntExtra("idProduto", 0);
+        produto = ProdutoDAO.getProdutoById(this, idProduto);
+        etNome.setText( produto.getNome() );
+
+        String[] categorias = getResources().getStringArray(R.array.categorias);
+
+        for( int i = 0; i < categorias.length ; i++){
+            if( produto.getCategoria().equals( categorias[i]  )){
+                spCategorias.setSelection( i );
+                break;
+            }
+        }
+
+    }
+
 
     private void salvar(){
         String nome = etNome.getText().toString();
@@ -39,13 +61,22 @@ public class FormularioActivity extends AppCompatActivity {
         if( nome.isEmpty() || spCategorias.getSelectedItemPosition() == 0 ){
             Toast.makeText(this, "Você deve preencher todos os campos!", Toast.LENGTH_LONG).show();
         }else {
-            Produto produto = new Produto();
+
+            if(  acao.equals("inserir") ) {
+                produto = new Produto();
+            }
             produto.setNome( nome );
             produto.setCategoria( spCategorias.getSelectedItem().toString()  );
-            ProdutoDAO.inserir(this, produto);
 
-            etNome.setText("");
-            spCategorias.setSelection(0, true);
+            if(  acao.equals("inserir") ) {
+                ProdutoDAO.inserir(this, produto);
+                etNome.setText("");
+                spCategorias.setSelection(0, true);
+            }else{
+                ProdutoDAO.editar(this, produto);
+                finish();
+            }
+
         }
 
     }
