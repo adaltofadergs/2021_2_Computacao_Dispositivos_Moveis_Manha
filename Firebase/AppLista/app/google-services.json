@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "124633245458",
+    "project_id": "applista2021-2-m",
+    "storage_bucket": "applista2021-2-m.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124633245458:android:c228f93d508b53c34af5cb",
+        "android_client_info": {
+          "package_name": "br.pro.adalto.applista"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124633245458-l5jkt0jv99g85eedb85170hvf90h6099.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB25WuMwKgCNRC7qrSgFO9mjqWPH5IU-4Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124633245458-l5jkt0jv99g85eedb85170hvf90h6099.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
